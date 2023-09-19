@@ -27,7 +27,7 @@ namespace TeknikMarket.CoreMVCUI
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddFluentValidationClientsideAdapters();
 
-            
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //builder.Services.AddTransient(); ÝSTEDÝÐÝN KADAR NEWLÝYOR HER TALEPTE NEW ÝÞLEMÝNÝ TEKRAR YAPIYOR
             //builder.Services.AddScoped();    SADECE 1 SCOPEDA GEÇERLÝ OLUYOR SONRA ÖLÜYOR

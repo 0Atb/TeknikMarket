@@ -1,8 +1,322 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "List";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+@model KategoriListeViewModel
 
-<h1>LİSTE SAYFASI BURASI</h1>
 
+<div class="col-md-12"><a onclick="KategoriModalShow();" class="btn btn-primary">KATEGORİ EKLE</a></div>
+
+<br />
+<div class="row">
+    <div style="width:1480px;" class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Kategori Listesi</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div id="buttonContainer"></div>
+                <br />
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>KategoriAdi</th>
+                            <th>Kategori Görünüm</th>
+                            <th>Aktiflik</th>
+                            <th>Sıra</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (Kategori item in Model.KategoriListesi)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.KategoriAdi</td>
+                                <td>@item.KategoriAdiGorunumu</td>
+                                <td>
+                                    @if (item.Aktif)
+                                    {
+                                        <input type="checkbox" kategoriid="@item.Id" class="Aktiflik" checked name="my-checkbox" data-bootstrap-switch data-off-color="danger" data-on-color="success" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" kategoriid="@item.Id" class="Aktiflik" name="my-checkbox" data-bootstrap-switch data-off-color="danger" data-on-color="success" />
+                                    }
+                                </td>
+                                <td>@item.Sira</td>
+                                <td><a kategoriid="@item.Id" class="btn btn-primary btnDuzenle">Düzenle</a></td>
+                                <td><a kategoriid="@item.Id" class="btn btn-danger btnSil">Sil</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Kategori Ekleme Modalı -->
+<form id="frmKategoriEkle">
+    @Html.AntiForgeryToken()
+    <div class="modal fade" id="AddKategoriModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="KAPAT">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Modal İçi -->
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Kategori Adi</label>
+                            <input type="hidden" id="GId" />
+                            <input type="text" asp-for=KategoriAdi class="form-control" placeholder="Kategori Adı" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Üst Kategorisi</label>
+                            <select asp-for=UstKategoriId class="form-control" asp-items="Model.KategoriSelectList"></select>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Aktif</label>
+                            <br />
+                            <input type="checkbox" asp-for=Aktif class="form-check-input" data-bootsrap-switch data-off-color="danger" data-on-color="success" />
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Sıra</label>
+                            <input type="text" asp-for=Sira class="form-control" placeholder="Sıra" />
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">KAPAT</button>
+                    <button id="btnKategoriEkle" type="button" class="btn btn-primary">KAYDET</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- /Kategori Ekleme Modalı -->
+@section style{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/adminassets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/adminassets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/adminassets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+}
+
+@section Script{
+
+
+    <!-- DataTables  & Plugins -->
+    <script src="/adminassets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/adminassets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/adminassets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/adminassets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="/adminassets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/adminassets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="/adminassets/plugins/jszip/jszip.min.js"></script>
+    <script src="/adminassets/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="/adminassets/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="/adminassets/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="/adminassets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="/adminassets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+                "lengthMenu": [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, 'All'],
+                ],
+                "language": {
+                    "url": "/adminassets/json/datatables_turkce.json"
+                },
+                //initComplete: function() {
+                //    setTimeout(funtion () {
+                //        table.buttons().container().appendTo("#buttonContainer");
+                //    },10);
+                //}
+            });
+        });
+
+        function KategoriModalShow() {
+            $("#AddKategoriModal").modal('show');
+        }
+
+        $(document).ready(function () {
+
+            $(document).on("click", "#btnKategoriEkle", function () {
+
+                var model = $("#frmKategoriEkle").serialize();
+
+
+                $.ajax({
+                    url: "/Admin/Kategori/Add",
+                    method: "post",
+                    dataType: "json",
+                    data: model,
+                    success: function (r) {
+                        if (r.result) {
+
+                            var table = "";
+                            var options = "<option value='-1'>Lütfen Kategori Seçiniz</option>";
+
+                            for (var i = 0; i < r.kategoriListesi.length; i++) {
+                                table += "<tr> <td>" + r.kategoriListesi[i].id + "</td> <td>" + r.kategoriListesi[i].kategoriAdi + "</td> <td>" + r.kategoriListesi[i].kategoriAdiGorunum + "</td><td>";
+
+                                if (r.kategoriListesi[i].aktif) {
+                                    table += "<input type='checkbox' kategoriid='" + r.kategoriListesi[i].id + "' class='Aktiflik' checked name='my-checkbox' data-bootstrap-switch data-off-color='danger' data-on-color='success'/>";
+                                } else {
+                                    table += "<input type='checkbox' kategoriid='" + r.kategoriListesi[i].id + "' class='Aktiflik' name='my-checkbox' data-bootstrap-switch data-off-color='danger' data-on-color='success'/>";
+                                }
+                               table += "</td><td>" + r.kategoriListesi[i].sira + "</td><td><a kategoriid='" + r.kategoriListesi[i].id + "' class='btn btn-primary btnDuzenle'> DÜZENLE </a></td> <td><a kategoriid='" + r.kategoriListesi[i].id + "' class='btn btn-danger btnSil'> SİL </a></td></tr>";
+
+                                options += "<option value = '" + r.kategoriListesi[i].id + "'>" + r.kategoriListesi[i].kategoriAdiGorunum + " </option>";
+                            }
+
+                            $("#tblKategoriler").html(table);
+                            $("#UstKategoriId").html(options);
+
+                            $("#Sira").val(r.sira);
+                            $("#input[data-bootstrap-switch]").each(function () {
+                                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+                            })
+                            Swal.fire(
+                                'Başarılı',
+                                r.mesaj,
+                                'success'
+                            )
+
+
+
+                        }
+
+                    },
+                    error: function () {
+
+                    }
+
+
+                });
+
+
+
+            })
+
+            $(document).on("click", ".btnSil", function () {
+
+                var id = $(this).attr("kategoriid");
+
+                Swal.fire({
+                    title: 'Dikkat!',
+                    text: "Kategori Silinecek Emin Misiniz ?!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'SİL',
+                    cancelButtonText: 'VAZGEÇ'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            url: "/Admin/Kategori/Delete",
+                            method: "post",
+                            dataType: "json",
+                            data: { KategoriId: id },
+                                            success: function (r) {
+                                if (r.result) {
+                                    var table = "";
+                                    var options = "<option value='-1'>Lütfen Kategori Seçiniz</option>";
+
+                                    for (var i = 0; i < r.kategoriListesi.length; i++) {
+                                        table += "<tr><td>" + r.kategoriListesi[i].id + "</td> <td>" + r.kategoriListesi[i].kategoriAdi + "</td> <td>" + r.kategoriListesi[i].kategoriAdiGorunum + "</td><td> ";
+
+                                        if (r.kategoriListesi[i].aktif) {
+                                            table += "<input type='checkbox' kategoriid = '" + r.kategoriListesi[i].id + "' class='Aktiflik' checked name='my-checkbox' data-bootstrap-switch data-off-color='danger' data-on-color='success' >";
+                                        }
+                                        else {
+                                            table += "<input type='checkbox' kategoriid = '" + r.kategoriListesi[i].id + "' class='Aktiflik'  name='my-checkbox' data-bootstrap-switch data-off-color='danger' data-on-color='success' >";
+
+                                        }
+                                        table += "</td><td>" + r.kategoriListesi[i].sira + "</td><td><a kategoriid='" + r.kategoriListesi[i].id + "' class='btn btn-primary btnDuzenle'> DÜZENLE </a></td> <td><a kategoriid='" + r.kategoriListesi[i].id + "' class='btn btn-danger btnSil'> SİL </a></td></tr>";
+
+                                        options += "<option value = '" + r.kategoriListesi[i].id + "'>" + r.kategoriListesi[i].kategoriAdiGorunum + " </option>";
+                                    }
+
+                                    $("#tblKategoriler").html(table);
+                                    $("#UstKategoriId").html(options);
+
+                                    $("#Sira").val(r.sira);
+                                    $("#input[data-bootstrap-switch]").each(function () {
+                                        $(this).bootstrapSwitch('state', $(this).prop('checked'));
+                                    })
+                                    Swal.fire(
+                                        'Başarılı',
+                                        r.mesaj,
+                                        'success'
+                                    )
+                                }else{
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'HATA',
+                                        text : r.mesaj
+                                    })
+                                }
+
+                            },
+                            error: function () {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'HATA',
+                                    text: 'Hata Oluştu sistem yöneticinize başvurun'
+                                })
+                            }
+                        });
+
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+                })
+            });
+
+
+
+
+
+
+        });
+    </script>
+
+
+}

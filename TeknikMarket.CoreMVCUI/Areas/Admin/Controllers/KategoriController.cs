@@ -9,14 +9,14 @@ using TeknikMarket.Model.ViewModel.Areas.Admin.Kategories;
 namespace TeknikMarket.CoreMVCUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    
+
     public class KategoriController : Controller
     {
         private readonly IKategoriBS kategoriBS;
         private readonly ISessionManager session;
         private readonly IMapper mapper;
 
-        public KategoriController(IKategoriBS kategoriBS, ISessionManager _session,IMapper _mapper)
+        public KategoriController(IKategoriBS kategoriBS, ISessionManager _session, IMapper _mapper)
         {
             this.kategoriBS = kategoriBS;
             session = _session;
@@ -91,7 +91,7 @@ namespace TeknikMarket.CoreMVCUI.Areas.Admin.Controllers
 
             sira = sira + 1;
 
-            return Json(new {result = true,Mesaj = "Kategori Başarıyla Eklendi", kategoriListesi = kategoriler , sira = sira});
+            return Json(new { result = true, Mesaj = "Kategori Başarıyla Eklendi", kategoriListesi = kategoriler, sira = sira });
         }
 
         public IActionResult Delete(int kategoriId)
@@ -103,6 +103,66 @@ namespace TeknikMarket.CoreMVCUI.Areas.Admin.Controllers
 
             return Json(new { result = true, mesaj = "Kategori Başarıyla Silindi", kategoriListesi = kategoriler });
         }
+
+        public IActionResult Update(KategoriListeViewModel model)
+        {
+            Kategori kategori = mapper.Map<Kategori>(model);
+            if (model.UstKategoriId != -1)
+            {
+                Kategori ustkategori = kategoriBS.Get(x => x.Id == model.UstKategoriId);
+
+                kategori.KategoriAdiGorunumu = ustkategori.KategoriAdiGorunumu + " > " + model.KategoriAdi;
+            }
+            else
+            {
+                kategori.KategoriAdiGorunumu = model.KategoriAdi;
+            }
+
+            kategori.Aktif = model.Aktif;
+            kategori.Sira = model.Sira;
+            kategori.GuncellemeTarihi = DateTime.Now;
+            //kategori.Guncelleyen = session.AktifKullanici.Id;
+
+            kategoriBS.Update(kategori);
+
+            List<Kategori> kategoriler = kategoriBS.GetAll();
+
+
+            return Json(new { result = true, mesaj = "Kategori Başarıyla Güncellendi.", kategoriListesi = kategoriler });
+        }
+
+        public IActionResult GetById(int KategoriId)
+        {
+            Kategori kategori = kategoriBS.Get(x=>x.Id == KategoriId);
+            List<Kategori> kategoriler = kategoriBS.GetAll();
+
+
+            return Json(new { result = true, kategori = kategori, kategoriListesi = kategoriler});
+        }
+
+        public IActionResult Aktiflik(int KategoriId, bool Aktiflik)
+        {
+            Kategori kategori = kategoriBS.Get(x=>x.Id == KategoriId);
+
+            if (kategori != null)
+            {
+                kategori.Aktif = Aktiflik;
+                kategoriBS.Update(kategori);
+            }
+            string mesaj = "";
+            if (kategori.Aktif)
+            {
+                mesaj = "Kategori Başarıyla Aktifleştirildi";
+            }
+            else
+            {
+                mesaj = "Kategori Başarıyla Pasifleştirildi";
+            }
+
+            return Json(new { result = true, mesaj = mesaj });
+
+        }
+
 
     }
 }

@@ -18,12 +18,11 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form>
+                <form asp-antiforgery="true">
                     <div class="card-body">
-
                         <div class="form-group">
-                            <label for="urunAdi">Ürün Adı</label>
-                            <input asp-for="UrunAdi" type="text" class="form-control" id="exampleInputEmail1" placeholder="Ürün Adi">
+                            <label>Ürün Adı</label>
+                            <input asp-for="UrunAdi" type="text" class="form-control" placeholder="Ürün Adi">
                         </div>
                         <div class="form-group">
                             <label for="kategori">Kategori</label>
@@ -97,48 +96,147 @@
     <!-- /.row -->
 </div><!-- /.container-fluid -->
 <!-- /.content -->
-
-
 @section style{
     <link rel="stylesheet" src="/adminassets/plugins/summernote/summernote-bs4.css" />
-    
+
 }
 
 @section Script{
     <script src="/adminassets/plugins/summernote/summernote-bs4.js"></script>
-
     <script>
+
         $("#Aciklama").summernote({
-            "height" : 200 
+            "height": 200
         });
 
         $(document).ready(
 
-            function () { 
-                
+            function () {
+
                 $("#fuUrunResimleri").change(
                     function () {
                         var files = $(this)[0].files;
-                        for(var i=0;i<files.length;i++){
+                        for (var i = 0; i < files.length; i++) {
                             var reader = new FileReader();
-                            reader.onload = function(event){
-                                table = "<img width='150' src='"+event.target.result+"'>";
+                            reader.onload = function (event) {
+                                table = "<img width='150' src='" + event.target.result + "'>";
 
                                 $("div.gallery").append(table);
                             }
                             reader.readAsDataURL(files[i]);
                         }
                     }
-                )
+                );
 
 
+                $("#btnUrunEkle").click(
+                    function () {
+                        var token = $("input[name=__RequestVerificationToken]").val();
+                        var urunFiyat = [];
+
+                        $("#UrunFiyatListesi tr").each(function () {
+
+                            urunFiyat.push({ Baslik: $(this).find('td')[1].innerHTML, Aciklama: $(this).find('td')[2].innerHTML, Fiyat: $(this).find('td')[3].innerHTML });
+
+                        });
+
+                        var model = {
+                            UrunAdi: $("#UrunAdi").val(),
+                            Aciklama: $("#Aciklama").val(),
+                            KategoriId: $("#KategoriId").val(),
+                            UrunFiyatlari: urunFiyat
+                        };
+
+                        $.ajax({
+                            url: "/Admin/Urun/Add",
+                            method: "post",
+                            data: { model: model, __RequestVerificationToken: token },
+                            success: function (rst) {
+                                if (rst) {
+                                    var UrunId = rst.id;
+
+                                    var files = $("#fuUrunResimleri")[0].files;   //type = file olan kontrolün seçtiği resimler
+
+                                    var frm = new FormData();
+
+                                    for (var i = 0; i < files.length; i++) {
+                                        frm.append(files[i].name, files[i]);
+                                    }
+
+                                    frm.append("UrunId", UrunId);
+
+                                    frm.append("__RequestVerificationToken", token);
+
+                                    $.ajax({
+                                        url: "/Admin/Urun/AddProductPhoto",
+                                        data: frm,
+                                        type: "POST",
+                                        contentType: false,
+                                        processData: false,
+                                        success: function (r) {
+                                            if (r.result) {
+                                                Swal.fire(
+                                                    'İşlem Başarılı',
+                                                    r.mesaj,
+                                                    'success'
+                                                )
+                                            } else {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Hata',
+                                                    text: r.mesaj
+                                                })
+                                            }
+                                        },
+                                        error: function () {
+
+                                        }
+
+                                    });
+                                }
+                            },
+                            error: function () {
+
+                            }
+                        });
+                    }
+                );
+                var id = 0;
+                $("#btnFiyatEkle").click(
+                    function () {
+                        var html = $("#UrunFiyatListesi").html();
+                        id = id + 1;
+
+                        $("#tdid").html(id + 1);
+
+                        var fiyat = $("#txtFiyat").val();
+                        var baslik = $("#txtBaslik").val();
+                        var aciklama = $("#txtAciklama").val();
+
+                        html += "<tr><td>" + id + "</td><td>" + baslik + "</td><td>" + aciklama + "</td><td>" + fiyat + "</td><td><a onclick='FiyatSil(this)' class='btn btn-danger'>Sil</a></td></tr>";
+
+                        $("#UrunFiyatListesi").html(html);
+                    }
+                );
+            });
+
+        function FiyatSil(item) {
+            item.closest("tr").remove();
+
+            var yid = 0;
+
+            $("#UrunFiyatListesi tr").each(function () { //Bu fontosiyon ID si UrunFiyatListesi olan tbody nin içindeki trleri sırayla döner. Her dönüşte $(this) e döndüğü satırın değerleri gelir.
+
+                yid = yid + 1;
+                var label = $(this).find('td').first().html(yid);
+
+            });
+
+            $("#tdid").html(yid + 1);
+            id = yid;
+        }
 
 
-
-            }
-
-
-        )
     </script>
 
 

@@ -33,8 +33,8 @@ namespace TeknikMarket.CoreMVCUI.Areas.Admin.Controllers
         public IActionResult Add()
         {
             UrunAddViewModel model = new UrunAddViewModel()
-            { 
-                KategoriListesi = kategoriBS.GetAll().Select(x=> new SelectListItem { Text= x.KategoriAdiGorunumu , Value = x.Id.ToString() }).ToList()
+            {
+                KategoriListesi = kategoriBS.GetAll().Select(x => new SelectListItem { Text = x.KategoriAdiGorunumu, Value = x.Id.ToString() }).ToList()
             };
 
             return View(model);
@@ -52,7 +52,6 @@ namespace TeknikMarket.CoreMVCUI.Areas.Admin.Controllers
                 item.UrunId = added.Id;
                 urunFiyatBS.Insert(item);
             }
-
             return Json(new { result = true, id = added.Id });
         }
 
@@ -68,7 +67,7 @@ namespace TeknikMarket.CoreMVCUI.Areas.Admin.Controllers
 
             foreach (IFormFile item in files)
             {
-                if (!item.ContentType.Contains("image/"))
+                if (item.ContentType.Contains("images/"))
                 {
                     hata++;
                     hatamesaj += item.FileName + " dosyası resim değil" + Environment.NewLine;
@@ -85,22 +84,22 @@ namespace TeknikMarket.CoreMVCUI.Areas.Admin.Controllers
                     {
                         string extension = Path.GetExtension(item.FileName);
                         string filename = RandomValueGenerator.UniqueFileName(extension);
-                        string uploadpath = Directory.GetCurrentDirectory() + "/wwwroot/image/products/" + filename;
-                        using(FileStream fs = new FileStream(uploadpath, FileMode.Create))
+                        string uploadpath = Directory.GetCurrentDirectory() + "/wwwroot/images/products/" + filename;
+                        using (FileStream fs = new FileStream(uploadpath, FileMode.Create))
                         {
                             item.CopyTo(fs);
                         }
                         UrunFotograf urunFotograf = new UrunFotograf()
                         {
                             UrunId = urunid,
-                            FotografAdresi = "/image/product/" + filename
+                            FotografAdresi = "/images/products/" + filename
                         };
                         hatamesaj += item.FileName + " dosyası başarıyla eklendi" + Environment.NewLine;
                         urunFotografBS.Insert(urunFotograf);
                     }
                 }
             }
-            if (hata>0)
+            if (hata > 0)
             {
                 return Json(new { result = false, mesaj = hatamesaj });
             }

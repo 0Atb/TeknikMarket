@@ -17,7 +17,7 @@ namespace TeknikMarket.Model.Entity
         }
 
         public string? UrunAdi { get; set; }
-        public string? Acıklama { get; set; }
+        public string? Aciklama { get; set; }
         public int? KategoriId { get; set; }
         public int? Stok { get; set; }
 

@@ -14,9 +14,9 @@ namespace Core.Data.Abstract
         List<TEntity> GetAll(Expression<Func<TEntity,bool>> filter, params string[] includelist);
         TEntity Get(Expression<Func<TEntity,bool>> filter, params string[] includelist);
         TEntity GetById(int Id, params string[] includelist);
-        void Insert(TEntity entity);
-        void Update(TEntity entity);
-        void Delete(TEntity entity);
-        void Delete(int Id);
+        TEntity Insert(TEntity entity);
+        TEntity Update(TEntity entity);
+        TEntity Delete(TEntity entity);
+        TEntity Delete(int Id);
     }
 }

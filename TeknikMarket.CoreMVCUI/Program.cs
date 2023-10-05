@@ -7,6 +7,7 @@ using TeknikMarket.Business.ValidationRule.Areas.Admin;
 using TeknikMarket.CoreMVCUI.Areas.Admin.Filter;
 using TeknikMarket.DataAccess.Abstract;
 using TeknikMarket.DataAccess.Concrete.EntityFramework.repository;
+using TeknikMarket.Model.Entity;
 using TeknikMarket.Model.ViewModel.Areas.Admin;
 
 namespace TeknikMarket.CoreMVCUI
@@ -27,6 +28,7 @@ namespace TeknikMarket.CoreMVCUI
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddFluentValidationClientsideAdapters();
 
+            //AUTOMAPPER
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //builder.Services.AddTransient(); ÝSTEDÝÐÝN KADAR NEWLÝYOR HER TALEPTE NEW ÝÞLEMÝNÝ TEKRAR YAPIYOR
@@ -37,6 +39,12 @@ namespace TeknikMarket.CoreMVCUI
             builder.Services.AddSingleton<IKullaniciRepository, EFKullaniciRepository>();
             builder.Services.AddSingleton<IKategoriBS, KategoriBs>();
             builder.Services.AddSingleton<IKategoriRepository, EFKategoriRepository>();
+            builder.Services.AddSingleton<IUrunBS, UrunBs>();
+            builder.Services.AddSingleton<IUrunRepository, EFUrunRepository >();
+            builder.Services.AddSingleton<IUrunFotografBS, UrunFotografBs>();
+            builder.Services.AddSingleton<IUrunFotografRepository, EFUrunFotografRepository>();
+            builder.Services.AddSingleton<IUrunFiyatBS, UrunFiyatBs>();
+            builder.Services.AddSingleton<IUrunFiyatRepository, EFUrunFiyatRepository>();
 
             //SESSION
             builder.Services.AddSession(option =>

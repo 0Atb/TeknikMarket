@@ -17,14 +17,14 @@ namespace TeknikMarket.Business.Concrete
         {
             repo = _repo;
         }
-        public void Delete(KullaniciRol entity)
+        public KullaniciRol Delete(KullaniciRol entity)
         {
-            repo.Delete(entity);
+            return repo.Delete(entity);
         }
 
-        public void Delete(int Id)
+        public KullaniciRol Delete(int Id)
         {
-            repo.Delete(Id);
+            return repo.Delete(Id);
         }
 
         public KullaniciRol Get(Expression<Func<KullaniciRol, bool>> fKullaniciRolter, params string[] includelist)
@@ -42,14 +42,14 @@ namespace TeknikMarket.Business.Concrete
             return repo.GetById(Id, includelist);
         }
 
-        public void Insert(KullaniciRol entity)
+        public KullaniciRol Insert(KullaniciRol entity)
         {
-            repo.Insert(entity);
+            return repo.Insert(entity);
         }
 
-        public void Update(KullaniciRol entity)
+        public KullaniciRol Update(KullaniciRol entity)
         {
-            repo.Update(entity);
+            return repo.Update(entity);
         }
     }
 }

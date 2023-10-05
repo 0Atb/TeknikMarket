@@ -17,14 +17,14 @@ namespace TeknikMarket.Business.Concrete
         {
             repo = _repo;
         }
-        public void Delete(StokBirim entity)
+        public StokBirim Delete(StokBirim entity)
         {
-            repo.Delete(entity);
+            return repo.Delete(entity);
         }
 
-        public void Delete(int Id)
+        public StokBirim Delete(int Id)
         {
-            repo.Delete(Id);
+            return repo.Delete(Id);
         }
 
         public StokBirim Get(Expression<Func<StokBirim, bool>> fStokBirimter, params string[] includelist)
@@ -42,14 +42,14 @@ namespace TeknikMarket.Business.Concrete
             return repo.GetById(Id, includelist);
         }
 
-        public void Insert(StokBirim entity)
+        public StokBirim Insert(StokBirim entity)
         {
-            repo.Insert(entity);
+            return repo.Insert(entity);
         }
 
-        public void Update(StokBirim entity)
+        public StokBirim Update(StokBirim entity)
         {
-            repo.Update(entity);
+            return repo.Update(entity);
         }
     }
 }

@@ -19,14 +19,14 @@ namespace TeknikMarket.Business.Concrete
             _repo = repo;
         }
 
-        public void Delete(Il entity)
+        public Il Delete(Il entity)
         {
-            _repo.Delete(entity);
+            return _repo.Delete(entity);
         }
 
-        public void Delete(int Id)
+        public Il Delete(int Id)
         {
-            _repo.Delete(Id);
+            return _repo.Delete(Id);
         }
 
         public Il Get(Expression<Func<Il, bool>> filter, params string[] incluedelist)
@@ -44,14 +44,14 @@ namespace TeknikMarket.Business.Concrete
             return _repo.GetById(Id, incluedelist);
         }
 
-        public void Insert(Il entity)
+        public Il Insert(Il entity)
         {
-            _repo.Insert(entity);
+            return _repo.Insert(entity);
         }
 
-        public void Update(Il entity)
+        public Il Update(Il entity)
         {
-            _repo.Update(entity);
+            return _repo.Update(entity);
         }
     }
 }

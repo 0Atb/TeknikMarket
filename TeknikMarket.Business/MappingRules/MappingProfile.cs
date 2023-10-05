@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TeknikMarket.Model.Entity;
 using TeknikMarket.Model.ViewModel.Areas.Admin.Kategories;
+using TeknikMarket.Model.ViewModel.Areas.Admin.Urunlers;
 
 namespace TeknikMarket.Business.MappingRules
 {
@@ -15,7 +16,7 @@ namespace TeknikMarket.Business.MappingRules
         {
             CreateMap<KategoriListeViewModel, Kategori>().ReverseMap();
 
-
+            CreateMap<Urun, UrunAddViewModel>().ReverseMap();
         }
     }
 }

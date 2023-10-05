@@ -17,14 +17,14 @@ namespace TeknikMarket.Business.Concrete
         {
             repo = _repo;
         }
-        public void Delete(Kategori entity)
+        public Kategori Delete(Kategori entity)
         {
-            repo.Delete(entity);
+            return repo.Delete(entity);
         }
 
-        public void Delete(int Id)
+        public Kategori Delete(int Id)
         {
-            repo.Delete(Id);
+            return repo.Delete(Id);
         }
 
         public Kategori Get(Expression<Func<Kategori, bool>> fKategoriter, params string[] includelist)
@@ -42,14 +42,14 @@ namespace TeknikMarket.Business.Concrete
             return repo.GetById(Id, includelist);
         }
 
-        public void Insert(Kategori entity)
+        public Kategori Insert(Kategori entity)
         {
-            repo.Insert(entity);
+            return repo.Insert(entity);
         }
 
-        public void Update(Kategori entity)
+        public Kategori Update(Kategori entity)
         {
-            repo.Update(entity);
+            return repo.Update(entity);
         }
     }
 }

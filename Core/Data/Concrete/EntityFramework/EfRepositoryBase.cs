@@ -14,22 +14,24 @@ namespace Core.Data.Concrete.EntityFramework
         where Entity : AudiTableEntity, IBaseDomain, new()
         where TContext : DbContext, new()
     {
-        public void Delete(Entity entity)
+        public Entity Delete(Entity entity)
         {
             using (TContext ctx = new TContext())
             {
                 ctx.Set<Entity>().Remove(entity); //Entity Listesini döner
                 ctx.SaveChanges();
+                return entity;
             }
         }
 
-        public void Delete(int Id)
+        public Entity Delete(int Id)
         {
             using (TContext ctx = new TContext())
             {
                 Entity entity = ctx.Set<Entity>().Where(x => x.Id == Id).FirstOrDefault();
                 ctx.Set<Entity>().Remove(entity);
                 ctx.SaveChanges();
+                return entity;
             }
         }
 
@@ -81,22 +83,24 @@ namespace Core.Data.Concrete.EntityFramework
             }
         }
 
-        public void Insert(Entity entity)
+        public Entity Insert(Entity entity)
         {
             using (TContext ctx = new TContext())
             {
                 ctx.Set<Entity>().Add(entity);
                 ctx.SaveChanges();
+                return entity;
             }
         }
 
-        public void Update(Entity entity)
+        public Entity Update(Entity entity)
         {
             using (TContext ctx = new TContext())
             {
                 Entity ent = ctx.Set<Entity>().Attach(entity).Entity;
                 ctx.Entry(entity).State= EntityState.Modified;
                 ctx.SaveChanges();
+                return entity;
             }
         }
     }

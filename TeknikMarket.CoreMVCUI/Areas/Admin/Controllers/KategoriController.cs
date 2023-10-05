@@ -9,7 +9,7 @@ using TeknikMarket.Model.ViewModel.Areas.Admin.Kategories;
 namespace TeknikMarket.CoreMVCUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
+    [AktifKullaniciFilter]
     public class KategoriController : Controller
     {
         private readonly IKategoriBS kategoriBS;
@@ -80,8 +80,8 @@ namespace TeknikMarket.CoreMVCUI.Areas.Admin.Controllers
             kategori.Sira = model.Sira;
             kategori.OlusturmaTarihi = DateTime.Now;
             kategori.GuncellemeTarihi = DateTime.Now;
-            //kategori.Olusturan = session.AktifKullanici.Id;
-            //kategori.Guncelleyen = session.AktifKullanici.Id;
+            kategori.Olusturan = session.AktifKullanici.Id;
+            kategori.Guncelleyen = session.AktifKullanici.Id;
 
             kategoriBS.Insert(kategori);
 
@@ -121,7 +121,7 @@ namespace TeknikMarket.CoreMVCUI.Areas.Admin.Controllers
             kategori.Aktif = model.Aktif;
             kategori.Sira = model.Sira;
             kategori.GuncellemeTarihi = DateTime.Now;
-            //kategori.Guncelleyen = session.AktifKullanici.Id;
+            kategori.Guncelleyen = session.AktifKullanici.Id;
 
             kategoriBS.Update(kategori);
 

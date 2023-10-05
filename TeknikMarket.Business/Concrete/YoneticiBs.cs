@@ -17,14 +17,14 @@ namespace TeknikMarket.Business.Concrete
         {
             repo = _repo;
         }
-        public void Delete(Yonetici entity)
+        public Yonetici Delete(Yonetici entity)
         {
-            repo.Delete(entity);
+            return repo.Delete(entity);
         }
 
-        public void Delete(int Id)
+        public Yonetici Delete(int Id)
         {
-            repo.Delete(Id);
+            return repo.Delete(Id);
         }
 
         public Yonetici Get(Expression<Func<Yonetici, bool>> fYoneticiter, params string[] includelist)
@@ -42,14 +42,14 @@ namespace TeknikMarket.Business.Concrete
             return repo.GetById(Id, includelist);
         }
 
-        public void Insert(Yonetici entity)
+        public Yonetici Insert(Yonetici entity)
         {
-            repo.Insert(entity);
+            return repo.Insert(entity);
         }
 
-        public void Update(Yonetici entity)
+        public Yonetici Update(Yonetici entity)
         {
-            repo.Update(entity);
+            return repo.Update(entity);
         }
     }
 }

@@ -19,14 +19,14 @@ namespace TeknikMarket.Business.Concrete
             _repo = repo;
         }
 
-        public void Delete(Banka entity)
+        public Banka Delete(Banka entity)
         {
-            _repo.Delete(entity);
+           return _repo.Delete(entity);
         }
 
-        public void Delete(int Id)
+        public Banka Delete(int Id)
         {
-            _repo.Delete(Id);
+           return _repo.Delete(Id);
         }
 
         public Banka Get(Expression<Func<Banka, bool>> filter, params string[] incluedelist)
@@ -44,14 +44,14 @@ namespace TeknikMarket.Business.Concrete
             return _repo.GetById(Id, incluedelist);
         }
 
-        public void Insert(Banka entity)
+        public Banka Insert(Banka entity)
         {
-            _repo.Insert(entity);
+            return _repo.Insert(entity);
         }
 
-        public void Update(Banka entity)
+        public Banka Update(Banka entity)
         {
-            _repo.Update(entity);
+           return _repo.Update(entity);
         }
     }
 }

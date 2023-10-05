@@ -10,10 +10,6 @@
                 <h3 class="card-title">Kategori Listesi</h3>
             </div>
             <!-- /.card-header -->
-
-
-
-
             <div class="card-body">
 
                 <div id="buttonContainer"></div>
@@ -55,17 +51,12 @@
                                 <td><a kategoriid="@item.Id" class="btn btn-danger btnSil">SİL</a></td>
                             </tr>
                         }
-
-
                     </tbody>
-
                 </table>
             </div>
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
-
-
     </div>
     <!-- /.col -->
 </div>
@@ -338,6 +329,7 @@
                 var id = $(this).attr("kategoriid");
 
 
+
                 $.ajax({
                     url: "/Admin/Kategori/GetById",
                     method: "post",
@@ -347,7 +339,6 @@
                         if (r.result) {
 
                             $("#GId").val(r.kategori.id);
-                            
                             $("#GKategoriAdi").val(r.kategori.kategoriAdi);
                             var options = "<option value='-1'>Lütfen Kategori Seçiniz...</option>";
                             for (var i = 0; i < r.kategoriListesi.length; i++) {
@@ -355,21 +346,18 @@
                                 if (r.kategori.ustKategoriId == r.kategoriListesi[i].id) {
                                     options += "<option selected value='" + r.kategoriListesi[i].id + "'>" + r.kategoriListesi[i].kategoriAdiGorunumu + "</option>";
 
-
                                 }
 
                                 else {
 
 
                                     options += "<option value='" + r.kategoriListesi[i].id + "'>" + r.kategoriListesi[i].kategoriAdiGorunumu + "</option>";
-
-
                                 }
 
 
                             }
 
-                            $("#GUstKategori").html(options);
+                            $("#GUstKategoriId").html(options);
 
 
                             $("#GSira").val(r.kategori.sira);
@@ -434,7 +422,7 @@
 
 
                             $("#tblKategoriler").html(table);
-                            $("#GUstKategori").html(options);
+                            $("#GUstKategoriId").html(options);
 
 
                             $("input[data-bootstrap-switch]").each(function () {

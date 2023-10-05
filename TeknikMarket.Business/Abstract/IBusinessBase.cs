@@ -14,9 +14,9 @@ namespace TeknikMarket.Business.Abstract
         List<TEntity> GetAll(Expression<Func<TEntity,bool>> filter = null, params string[] incluedelist);
         TEntity Get(Expression<Func<TEntity, bool>> filter = null, params string[] incluedelist);
         TEntity GetById(int Id,params string[] incluedelist);
-        void Insert(TEntity entity);
-        void Update(TEntity entity);
-        void Delete(TEntity entity);
-        void Delete(int Id);
+        TEntity Insert(TEntity entity);
+        TEntity Update(TEntity entity);
+        TEntity Delete(TEntity entity);
+        TEntity Delete(int Id);
     }
 }

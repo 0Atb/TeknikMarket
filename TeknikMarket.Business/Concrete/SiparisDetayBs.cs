@@ -17,14 +17,14 @@ namespace TeknikMarket.Business.Concrete
         {
             repo = _repo;
         }
-        public void Delete(SiparisDetay entity)
+        public SiparisDetay Delete(SiparisDetay entity)
         {
-            repo.Delete(entity);
+            return repo.Delete(entity);
         }
 
-        public void Delete(int Id)
+        public SiparisDetay Delete(int Id)
         {
-            repo.Delete(Id);
+            return repo.Delete(Id);
         }
 
         public SiparisDetay Get(Expression<Func<SiparisDetay, bool>> fSiparisDetayter, params string[] includelist)
@@ -42,14 +42,14 @@ namespace TeknikMarket.Business.Concrete
             return repo.GetById(Id, includelist);
         }
 
-        public void Insert(SiparisDetay entity)
+        public SiparisDetay Insert(SiparisDetay entity)
         {
-            repo.Insert(entity);
+            return repo.Insert(entity);
         }
 
-        public void Update(SiparisDetay entity)
+        public SiparisDetay Update(SiparisDetay entity)
         {
-            repo.Update(entity);
+            return repo.Update(entity);
         }
     }
 }

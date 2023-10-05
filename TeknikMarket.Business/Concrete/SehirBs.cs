@@ -17,14 +17,14 @@ namespace TeknikMarket.Business.Concrete
         {
             repo = _repo;
         }
-        public void Delete(Sehir entity)
+        public Sehir Delete(Sehir entity)
         {
-            repo.Delete(entity);
+            return repo.Delete(entity);
         }
 
-        public void Delete(int Id)
+        public Sehir Delete(int Id)
         {
-            repo.Delete(Id);
+            return repo.Delete(Id);
         }
 
         public Sehir Get(Expression<Func<Sehir, bool>> fSehirter, params string[] includelist)
@@ -42,14 +42,14 @@ namespace TeknikMarket.Business.Concrete
             return repo.GetById(Id, includelist);
         }
 
-        public void Insert(Sehir entity)
+        public Sehir Insert(Sehir entity)
         {
-            repo.Insert(entity);
+            return repo.Insert(entity);
         }
 
-        public void Update(Sehir entity)
+        public Sehir Update(Sehir entity)
         {
-            repo.Update(entity);
+            return repo.Update(entity);
         }
     }
 }

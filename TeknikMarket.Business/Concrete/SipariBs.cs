@@ -15,26 +15,26 @@ namespace TeknikMarket.Business.Concrete
         private ISipariRepository repo;
         public SipariBs(ISipariRepository _repo)
         {
-            repo = _repo;
+             repo = _repo;
         }
-        public void Delete(Sipari entity)
+        public Sipari Delete(Sipari entity)
         {
-            repo.Delete(entity);
-        }
-
-        public void Delete(int Id)
-        {
-            repo.Delete(Id);
+            return repo.Delete(entity);
         }
 
-        public Sipari Get(Expression<Func<Sipari, bool>> fSipariter, params string[] includelist)
+        public Sipari Delete(int Id)
         {
-            return repo.Get(fSipariter, includelist);
+            return repo.Delete(Id);
         }
 
-        public List<Sipari> GetAll(Expression<Func<Sipari, bool>> fSipariter, params string[] includelist)
+        public Sipari Get(Expression<Func<Sipari, bool>> filter, params string[] includelist)
         {
-            return repo.GetAll(fSipariter, includelist);
+            return repo.Get(filter, includelist);
+        }
+
+        public List<Sipari> GetAll(Expression<Func<Sipari, bool>> filter, params string[] includelist)
+        {
+            return repo.GetAll(filter, includelist);
         }
 
         public Sipari GetById(int Id, params string[] includelist)
@@ -42,14 +42,14 @@ namespace TeknikMarket.Business.Concrete
             return repo.GetById(Id, includelist);
         }
 
-        public void Insert(Sipari entity)
+        public Sipari Insert(Sipari entity)
         {
-            repo.Insert(entity);
+            return repo.Insert(entity);
         }
 
-        public void Update(Sipari entity)
+        public Sipari Update(Sipari entity)
         {
-            repo.Update(entity);
+            return repo.Update(entity);
         }
     }
 }

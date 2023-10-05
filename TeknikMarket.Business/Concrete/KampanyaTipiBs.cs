@@ -17,14 +17,14 @@ namespace TeknikMarket.Business.Concrete
         {
             repo = _repo;
         }
-        public void Delete(KampanyaTipi entity)
+        public KampanyaTipi Delete(KampanyaTipi entity)
         {
-            repo.Delete(entity);
+            return repo.Delete(entity);
         }
 
-        public void Delete(int Id)
+        public KampanyaTipi Delete(int Id)
         {
-            repo.Delete(Id);
+            return repo.Delete(Id);
         }
 
         public KampanyaTipi Get(Expression<Func<KampanyaTipi, bool>> fKampanyaTipiter, params string[] includelist)
@@ -42,14 +42,14 @@ namespace TeknikMarket.Business.Concrete
             return repo.GetById(Id, includelist);
         }
 
-        public void Insert(KampanyaTipi entity)
+        public KampanyaTipi Insert(KampanyaTipi entity)
         {
-            repo.Insert(entity);
+            return repo.Insert(entity);
         }
 
-        public void Update(KampanyaTipi entity)
+        public KampanyaTipi Update(KampanyaTipi entity)
         {
-            repo.Update(entity);
+            return repo.Update(entity);
         }
     }
 }

@@ -17,14 +17,14 @@ namespace TeknikMarket.Business.Concrete
         {
             repo = _repo;
         }
-        public void Delete(TaksitSecenek entity)
+        public TaksitSecenek Delete(TaksitSecenek entity)
         {
-            repo.Delete(entity);
+            return repo.Delete(entity);
         }
 
-        public void Delete(int Id)
+        public TaksitSecenek Delete(int Id)
         {
-            repo.Delete(Id);
+            return repo.Delete(Id);
         }
 
         public TaksitSecenek Get(Expression<Func<TaksitSecenek, bool>> fTaksitSecenekter, params string[] includelist)
@@ -42,14 +42,14 @@ namespace TeknikMarket.Business.Concrete
             return repo.GetById(Id, includelist);
         }
 
-        public void Insert(TaksitSecenek entity)
+        public TaksitSecenek Insert(TaksitSecenek entity)
         {
-            repo.Insert(entity);
+            return repo.Insert(entity);
         }
 
-        public void Update(TaksitSecenek entity)
+        public TaksitSecenek Update(TaksitSecenek entity)
         {
-            repo.Update(entity);
+            return repo.Update(entity);
         }
     }
 }

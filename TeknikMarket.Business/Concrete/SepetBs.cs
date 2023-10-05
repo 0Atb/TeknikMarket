@@ -17,14 +17,14 @@ namespace TeknikMarket.Business.Concrete
         {
             repo = _repo;
         }
-        public void Delete(Sepet entity)
+        public Sepet Delete(Sepet entity)
         {
-            repo.Delete(entity);
+            return repo.Delete(entity);
         }
 
-        public void Delete(int Id)
+        public Sepet Delete(int Id)
         {
-            repo.Delete(Id);
+            return repo.Delete(Id);
         }
 
         public Sepet Get(Expression<Func<Sepet, bool>> fSepetter, params string[] includelist)
@@ -42,14 +42,14 @@ namespace TeknikMarket.Business.Concrete
             return repo.GetById(Id, includelist);
         }
 
-        public void Insert(Sepet entity)
+        public Sepet Insert(Sepet entity)
         {
-            repo.Insert(entity);
+            return repo.Insert(entity);
         }
 
-        public void Update(Sepet entity)
+        public Sepet Update(Sepet entity)
         {
-            repo.Update(entity);
+            return repo.Update(entity);
         }
     }
 }

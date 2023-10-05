@@ -17,14 +17,14 @@ namespace TeknikMarket.Business.Concrete
         {
             repo = _repo;
         }
-        public void Delete(UrunFiyat entity)
+        public UrunFiyat Delete(UrunFiyat entity)
         {
-            repo.Delete(entity);
+            return repo.Delete(entity);
         }
 
-        public void Delete(int Id)
+        public UrunFiyat Delete(int Id)
         {
-            repo.Delete(Id);
+            return repo.Delete(Id);
         }
 
         public UrunFiyat Get(Expression<Func<UrunFiyat, bool>> fUrunFiyatter, params string[] includelist)
@@ -42,14 +42,14 @@ namespace TeknikMarket.Business.Concrete
             return repo.GetById(Id, includelist);
         }
 
-        public void Insert(UrunFiyat entity)
+        public UrunFiyat Insert(UrunFiyat entity)
         {
-            repo.Insert(entity);
+            return repo.Insert(entity);
         }
 
-        public void Update(UrunFiyat entity)
+        public UrunFiyat Update(UrunFiyat entity)
         {
-            repo.Update(entity);
+            return repo.Update(entity);
         }
     }
 }

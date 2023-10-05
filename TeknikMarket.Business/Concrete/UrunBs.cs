@@ -17,14 +17,15 @@ namespace TeknikMarket.Business.Concrete
         {
             repo = _repo;
         }
-        public void Delete(Urun entity)
+
+        public Urun Delete(Urun entity)
         {
-            repo.Delete(entity);
+            return repo.Delete(entity);
         }
 
-        public void Delete(int Id)
+        public Urun Delete(int Id)
         {
-            repo.Delete(Id);
+            return repo.Delete(Id);
         }
 
         public Urun Get(Expression<Func<Urun, bool>> fUrunter, params string[] includelist)
@@ -42,14 +43,14 @@ namespace TeknikMarket.Business.Concrete
             return repo.GetById(Id, includelist);
         }
 
-        public void Insert(Urun entity)
+        public Urun Insert(Urun entity)
         {
-            repo.Insert(entity);
+            return repo.Insert(entity);
         }
 
-        public void Update(Urun entity)
+        public Urun Update(Urun entity)
         {
-            repo.Update(entity);
+            return repo.Update(entity);
         }
     }
 }

@@ -17,14 +17,14 @@ namespace TeknikMarket.Business.Concrete
         {
             repo = _repo;
         }
-        public void Delete(Marka entity)
+        public Marka Delete(Marka entity)
         {
-            repo.Delete(entity);
+            return repo.Delete(entity);
         }
 
-        public void Delete(int Id)
+        public Marka Delete(int Id)
         {
-            repo.Delete(Id);
+            return repo.Delete(Id);
         }
 
         public Marka Get(Expression<Func<Marka, bool>> fMarkater, params string[] includelist)
@@ -42,14 +42,14 @@ namespace TeknikMarket.Business.Concrete
             return repo.GetById(Id, includelist);
         }
 
-        public void Insert(Marka entity)
+        public Marka Insert(Marka entity)
         {
-            repo.Insert(entity);
+            return repo.Insert(entity);
         }
 
-        public void Update(Marka entity)
+        public Marka Update(Marka entity)
         {
-            repo.Update(entity);
+            return repo.Update(entity);
         }
     }
 }
